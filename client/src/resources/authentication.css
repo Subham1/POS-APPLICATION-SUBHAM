@@ -1,0 +1,24 @@
+.authentication {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('./auth.svg');
+    background-size: 100%;
+
+}
+.authentication .ant-row{
+    width: 100%;
+    justify-content: center;
+
+}
+.authentication form{
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+.ant-btn-primary{
+    border-radius: 40px;
+    color : #ccc;
+    background-color: rgb(56, 50, 26);
+}

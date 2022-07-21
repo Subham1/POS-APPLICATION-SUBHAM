@@ -1,0 +1,148 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "../resources/layout.css";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  HomeOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  CopyOutlined,
+  UnorderedListOutlined,
+  LogoutOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+import { useSelector } from "react-redux";
+const { Header, Sider, Content } = Layout;
+
+const DefaultLayout = (props) => {
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
+  const { cartItems, loading } = useSelector((state) => {
+    return state.rootReducer;
+  });
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+  return (
+    <Layout>
+      {loading && (
+        <div className="spinner">
+        <div
+          className="spinner-border"
+          role="status"
+        >
+        </div>
+        </div>
+      )}
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className="logo">
+          <h3> {collapsed ? "POS" : "POS-APP"} </h3>
+        </div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={window.location.pathname}
+        >
+          <Menu.Item
+            key="/home"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            icon={<HomeOutlined />}
+          >
+            <Link to="/home">Home</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            key="/cart"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            icon={<ShoppingCartOutlined />}
+          >
+            <Link to="/cart">Cart</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            key="/bills"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            icon={<CopyOutlined />}
+          >
+            <Link to="/bills">Bills</Link>
+          </Menu.Item>
+          <Menu.Item
+            key="/items"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            icon={<UnorderedListOutlined />}
+          >
+            <Link to="/items">Items</Link>
+          </Menu.Item>
+          <Menu.Item
+            key="customers"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            icon={<UserOutlined />}
+          >
+            <Link to="/customers">Customers</Link>
+          </Menu.Item>
+          <Menu.Item
+            key="/logout"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            icon={<LogoutOutlined />}
+            onClick={()=>{
+              localStorage.removeItem('pos-user')
+              navigate('/login')  
+            }}
+
+          >
+            Logout
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      <Layout className="site-layout">
+        <Header
+          className="site-layout-background"
+          style={{
+            padding: 10,
+          }}
+        >
+          {React.createElement(
+            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+            {
+              className: "trigger",
+              onClick: () => setCollapsed(!collapsed),
+            }
+          )}
+          <div
+            className="cart-count d-flex align-items-center"
+            onClick={() => {
+              navigate("/cart");
+            }}
+          >
+            <ShoppingCartOutlined />
+            <b>
+              <p className="mt-3">{cartItems.length}</p>
+            </b>
+          </div>
+        </Header>
+        <Content
+          className="site-layout-background"
+          style={{
+            margin: "10px",
+            padding: 24,
+            minHeight: "80vh",
+          }}
+        >
+          {props.children}
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default DefaultLayout;
