@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node" : "17.0.1.",
+    "node": ">=v12.22.5",
     "npm" : "8.1.0",
     "yarn" : "1.22.17"
+
 
   },
 
