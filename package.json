@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": ">=v12.22.5",
+    "node" : "17.0.1.",
     "npm" : "8.1.0",
     "yarn" : "1.22.17"
-
+    
 
   },
 
