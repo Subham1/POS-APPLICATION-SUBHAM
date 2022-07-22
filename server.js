@@ -11,7 +11,7 @@ app.use('/api/users/', usersRoute)
 app.use('/api/bills/',billsRoute)
 
 const path = require('path')
-if(process.send.NODE_ENV === 'productsion'){
+if(process.send.NODE_ENV === 'production'){
     app.use('/',express.static('client/build'))
     app.get('*',(req,res)=>{
         res.sendFile(path.resolve(__dirname,'client/build/index.html'))
